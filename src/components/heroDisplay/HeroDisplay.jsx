@@ -1,9 +1,18 @@
 import Button from "react-bootstrap/Button";
-import { postHero } from "../../utils/postHero";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-// import { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+
 export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
+  const POST_HERO = gql`
+    mutation Mutation($heroInfo: SuperheroInput) {
+      postHero(heroInfo: $heroInfo) {
+        success
+        message
+      }
+    }
+  `;
+  const [mutateHero, { data, loading, error }] = useMutation(POST_HERO);
   // const [curHeroInfo, setCurHeroInfo] = useState(heroInfo);
 
   if (!heroInfo) {
@@ -11,7 +20,26 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
   }
 
   const handleSubmit = async () => {
-    await postHero(heroInfo);
+    const { combat, durability, intelligence, power, speed, strength } =
+      heroInfo.powerstats;
+    const updatedPowerstats = {
+      combat: parseInt(combat),
+      durability: parseInt(durability),
+      intelligence: parseInt(intelligence),
+      power: parseInt(power),
+      speed: parseInt(speed),
+      strength: parseInt(strength),
+    };
+
+    const updatedHeroInfo = {
+      name: heroInfo.name,
+      img: heroInfo.image.url,
+      powerstats: updatedPowerstats,
+    };
+
+    const mutateResult = await mutateHero({
+      variables: { heroInfo: updatedHeroInfo },
+    });
   };
 
   // due to setter being async

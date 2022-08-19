@@ -1,5 +1,5 @@
 export const postHero = async (heroInfo) => {
-  const response = await fetch("http://localhost:9000/postHero", {
+  const response = await fetch("http://localhost:4000", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
