@@ -8,4 +8,3 @@ export const postHero = async (heroInfo) => {
   });
   return response.json();
 };
-// postHero();

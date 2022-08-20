@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { HeroDisplay } from "../heroDisplay/HeroDisplay";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -17,19 +16,11 @@ export const SearchBar = ({  setHeroInfo }) => {
     setHeroInfo(await fetchSuperHeros(searchText));
   };
 
-  // console.log(await fetchSuperHeros("batman"));
+
 
   return (
     <div className="searchBar">
-      {/* <label htmlFor="superhero">Search your favorite superhero!</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        value={searchText}
-        onChange={handleChange}
-      ></input>
-      <Button onClick={handleSubmit} /> */}
+      
       <InputGroup>
         <Form.Control
           placeholder="wut's ya fav superhero?"

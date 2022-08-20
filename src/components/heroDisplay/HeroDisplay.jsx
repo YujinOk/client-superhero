@@ -2,8 +2,14 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { gql, useMutation } from "@apollo/client";
+import Toast from "react-bootstrap/Toast";
+
+import { useState } from "react";
 
 export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
+  const [isToast, setIsToast] = useState(false);
+  const [showA, setShowA] = useState(true);
+
   const POST_HERO = gql`
     mutation Mutation($heroInfo: SuperheroInput) {
       postHero(heroInfo: $heroInfo) {
@@ -12,8 +18,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
       }
     }
   `;
-  const [mutateHero, { data, loading, error }] = useMutation(POST_HERO);
-  // const [curHeroInfo, setCurHeroInfo] = useState(heroInfo);
+  const [mutateHero] = useMutation(POST_HERO);
 
   if (!heroInfo) {
     return <div>Loading...⚪️</div>;
@@ -33,16 +38,18 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
 
     const updatedHeroInfo = {
       name: heroInfo.name,
-      img: heroInfo.image.url,
+      img: heroInfo.img,
       powerstats: updatedPowerstats,
     };
 
-    const mutateResult = await mutateHero({
+   await mutateHero({
       variables: { heroInfo: updatedHeroInfo },
     });
+
+    setIsToast(!isToast);
   };
 
-  // due to setter being async
+  // due to setter being, had to copy the original state and mutate it
   const handleChange = async (event) => {
     setHeroInfo((preState) => {
       const copyPreState = { ...preState };
@@ -52,11 +59,13 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     });
   };
 
+  const toggleShowA = () => setShowA(!showA);
   // needs another button to save ->call postHero function (heroInfo)
+
   return (
     <div className="mt-4 d-flex align-items-center flex-column">
-      <h5 className="font-weight-bold mb-3"> {heroInfo.name}</h5>
-      {/* <p>Powerstats:</p> */}
+      <h4 className="font-weight-bold mb-3"> {heroInfo.name}</h4>
+
       <InputGroup className="d-flex justify-content-around border border-secondary rounded p-3">
         <ul>
           <li className="list-unstyled mb-3">
@@ -113,16 +122,41 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
               id="strength"
             />
           </li>
+
           <div className="justify-content-center mt-4">
-            <Button onClick={handleSubmit} variant="outline-secondary">
+            <Button
+              onClick={handleSubmit}
+              variant="outline-secondary"
+              data-dismiss="toast"
+            >
               {" "}
               Save
             </Button>
           </div>
+          {isToast && (
+            <Toast
+              show={showA}
+              onClose={toggleShowA}
+              className="bg-secondary"
+              position="top-start"
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto">Success!</strong>
+              </Toast.Header>
+              <Toast.Body>
+                Woohoo, You have succesfully saved your superhero! 🎉
+              </Toast.Body>
+            </Toast>
+          )}
         </ul>
 
         <img
-          src={heroInfo.image.url}
+          src={heroInfo.img}
           alt={heroInfo.name}
           className="w-50 h-50 rounded mt-3"
         ></img>

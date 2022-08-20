@@ -7,13 +7,13 @@ export const fetchSuperHeros = async (searchTerm) => {
     const superHeroData = await response.json();
     const cleanupDataName = superHeroData.results[0].name;
     const cleanupDataPowerstats = superHeroData.results[0].powerstats;
-    const cleanupDataImg = superHeroData.results[0].image;
+    const cleanupDataImg = superHeroData.results[0].image.url;
     return {
       name: cleanupDataName,
       powerstats: cleanupDataPowerstats,
-      image: cleanupDataImg,
+      img: cleanupDataImg,
     };
-    // return searchText;
+   
   } catch (err) {
     console.error(err);
   }
