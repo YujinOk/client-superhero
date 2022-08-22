@@ -27,10 +27,12 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     setHeroInfo(chosenHero);
     handleClose();
   };
-  const { data, loading } = useQuery(GET_SUPERHERO);
+  const { data, loading } = useQuery(GET_SUPERHERO, {
+    fetchPolicy: "network-only",
+  });
 
   if (loading) {
-    return <div>loading....</div>;
+    return <div className="text-center">loading....⚪️</div>;
   }
 
   return (
