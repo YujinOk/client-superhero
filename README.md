@@ -50,3 +50,5 @@
 - After fixing the issue above, I have realised that edited data does not reflect on the ```<savedHeroModal/>``` in the browser. This was happening because graphql request was automatically caching, which took a long time to identify. 
    - This has solved by giving different fetch policy that disabled reading from the  cache
 
+- I was unable to reposition toast by trying to use ```use.Context()```but unable to resolve in time. It also only works at the first time but unable to solve either in time 
+
