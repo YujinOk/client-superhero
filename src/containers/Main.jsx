@@ -13,7 +13,6 @@ export const Main = () => {
 
   const handleSubmit = async () => {
     handleShow();
-    // await getHeroGraphql();
   };
 
   return (

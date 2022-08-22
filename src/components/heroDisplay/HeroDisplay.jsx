@@ -49,14 +49,11 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     setIsToast(!isToast);
   };
 
-  // due to setter being async, had to copy the original state and mutate it
   const handleChange = async (event) => {
-    setHeroInfo((preState) => {
-      const copyPreState = { ...preState };
-      copyPreState.powerstats[event.target.id] = event.target.value;
+    const copyPreState = JSON.parse(JSON.stringify(heroInfo));
+    copyPreState.powerstats[event.target.id] = event.target.value;
 
-      return copyPreState;
-    });
+    setHeroInfo(copyPreState);
   };
 
   const toggleShowA = () => setShowA(!showA);

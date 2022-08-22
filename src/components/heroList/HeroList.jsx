@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-
+import React from "react";
 export const HeroList = ({ setHeroInfo, handleClose }) => {
   const GET_SUPERHERO = gql`
     query Query {
@@ -37,16 +37,15 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             <li
               className="text-primary text-center"
               id={cur.id}
               onClick={handleSubmit}
-              key={String.fromCharCode(index)}
             >
               {cur.name}
             </li>
-          </>
+          </React.Fragment>
         );
       })}
     </ul>
