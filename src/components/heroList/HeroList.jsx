@@ -18,6 +18,8 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
       }
     }
   `;
+
+  // to find the curHero has been clicked = whats saved in DB
   const handleSubmit = (event) => {
     const chosenHero = data.superhero.find(
       (curHero) => curHero.id === event.target.id
@@ -30,6 +32,7 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
   if (loading) {
     return <div>loading....</div>;
   }
+
   return (
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {

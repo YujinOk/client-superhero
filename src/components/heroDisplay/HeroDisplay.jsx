@@ -42,14 +42,14 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
       powerstats: updatedPowerstats,
     };
 
-   await mutateHero({
+    await mutateHero({
       variables: { heroInfo: updatedHeroInfo },
     });
 
     setIsToast(!isToast);
   };
 
-  // due to setter being, had to copy the original state and mutate it
+  // due to setter being async, had to copy the original state and mutate it
   const handleChange = async (event) => {
     setHeroInfo((preState) => {
       const copyPreState = { ...preState };

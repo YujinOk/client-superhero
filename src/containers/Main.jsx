@@ -2,13 +2,10 @@ import { HeroDisplay } from "../components/heroDisplay/HeroDisplay";
 import { SearchBar } from "../components/searchBar/SearchBar";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { getHeroGraphql } from "../utils/getHeroGraphql";
 import { SavedHeroModal } from "../components/savedHeroModal/SavedHeroModal";
 
 export const Main = () => {
   const [heroInfo, setHeroInfo] = useState(null);
-
-
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
@@ -16,11 +13,8 @@ export const Main = () => {
 
   const handleSubmit = async () => {
     handleShow();
-    await getHeroGraphql();
+    // await getHeroGraphql();
   };
-
-
-  
 
   return (
     <div>
@@ -39,7 +33,7 @@ export const Main = () => {
               className="rounded btn btn-secondary"
               onClick={handleSubmit}
             >
-              Click me! If you wanna view your saved superheroes? 😃
+              Click me! If you wanna view your saved superheroes 😃
             </Button>
           </div>
         </>

@@ -1,5 +1,4 @@
 import { Header } from "./components/header/Header";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Main } from "./containers/Main.jsx";
 
