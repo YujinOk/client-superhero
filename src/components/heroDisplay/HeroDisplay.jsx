@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
   const [isToast, setIsToast] = useState(false);
-  const [showA, setShowA] = useState(true);
+  const [showToast, setShowToast] = useState(true);
 
   const POST_HERO = gql`
     mutation Mutation($heroInfo: SuperheroInput) {
@@ -56,7 +56,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     setHeroInfo(copyPreState);
   };
 
-  const toggleShowA = () => setShowA(!showA);
+  const toggleShowToast = () => setShowToast(!showToast);
   // needs another button to save ->call postHero function (heroInfo)
 
   return (
@@ -132,8 +132,8 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
           </div>
           {isToast && (
             <Toast
-              show={showA}
-              onClose={toggleShowA}
+              show={showToast}
+              onClose={toggleShowToast}
               className="bg-secondary"
               position="top-start"
             >
