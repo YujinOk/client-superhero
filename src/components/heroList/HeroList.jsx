@@ -27,6 +27,8 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     setHeroInfo(chosenHero);
     handleClose();
   };
+
+  // because it automatically caches the default -> what has been edited did not render/reflect right away
   const { data, loading } = useQuery(GET_SUPERHERO, {
     fetchPolicy: "network-only",
   });

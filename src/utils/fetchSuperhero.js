@@ -1,4 +1,5 @@
 export const fetchSuperHeros = async (searchTerm) => {
+  // because browser doesn't like the white space
   const noSpaceSearchTerm = searchTerm.replace(/\s/g, "%20");
 
   let url = `https://www.superheroapi.com/api.php/5390008314429413/search/${noSpaceSearchTerm}`;
@@ -13,7 +14,6 @@ export const fetchSuperHeros = async (searchTerm) => {
       powerstats: cleanupDataPowerstats,
       img: cleanupDataImg,
     };
-   
   } catch (err) {
     console.error(err);
   }

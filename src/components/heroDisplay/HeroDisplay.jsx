@@ -7,8 +7,8 @@ import Toast from "react-bootstrap/Toast";
 import { useState } from "react";
 
 export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
-  const [isToast, setIsToast] = useState(false);
-  const [showToast, setShowToast] = useState(true);
+  // const [isToast, setIsToast] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const POST_HERO = gql`
     mutation Mutation($heroInfo: SuperheroInput) {
@@ -23,7 +23,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
   if (!heroInfo) {
     return <div>Loading...⚪️</div>;
   }
-
+  const toggleShowToast = () => setShowToast(!showToast);
   const handleSubmit = async () => {
     const { combat, durability, intelligence, power, speed, strength } =
       heroInfo.powerstats;
@@ -46,7 +46,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
       variables: { heroInfo: updatedHeroInfo },
     });
 
-    setIsToast(!isToast);
+    toggleShowToast();
   };
 
   const handleChange = async (event) => {
@@ -56,7 +56,6 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     setHeroInfo(copyPreState);
   };
 
-  const toggleShowToast = () => setShowToast(!showToast);
   // needs another button to save ->call postHero function (heroInfo)
 
   return (
@@ -130,26 +129,25 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
               Save
             </Button>
           </div>
-          {isToast && (
-            <Toast
-              show={showToast}
-              onClose={toggleShowToast}
-              className="bg-secondary"
-              position="top-start"
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto">Success!</strong>
-              </Toast.Header>
-              <Toast.Body>
-                Woohoo, You have succesfully saved your superhero! 🎉
-              </Toast.Body>
-            </Toast>
-          )}
+
+          <Toast
+            show={showToast}
+            onClose={toggleShowToast}
+            className="bg-secondary"
+            position="top-start"
+          >
+            <Toast.Header>
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto">Success!</strong>
+            </Toast.Header>
+            <Toast.Body>
+              Woohoo, You have succesfully saved your superhero! 🎉
+            </Toast.Body>
+          </Toast>
         </ul>
 
         <img
