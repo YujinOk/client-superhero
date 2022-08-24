@@ -53,3 +53,4 @@
   - This has solved by giving different fetch policy that disabled reading from the cache
 
 - I was unable to reposition toast by trying to use `use.Context()`but unable to resolve the positioning issue in time. It also only works at the first time but was unable to solve either in time
+- As item gets deleted, the whole page re-renders. I tried using `fetch()` instead of using graphql hook as I suspected it was occuring due to the `Apolloprovider` updating its own state. I haven't been able to fix this issue. 

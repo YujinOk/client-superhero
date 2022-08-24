@@ -23,20 +23,16 @@ export const Main = () => {
         setHeroInfo={setHeroInfo}
       />
       <SearchBar setHeroInfo={setHeroInfo} />
-      {heroInfo !== null && (
+      {!!heroInfo && (
         <>
           <HeroDisplay heroInfo={heroInfo} setHeroInfo={setHeroInfo} />
-
-          <div className="d-flex justify-content-center mt-3 ">
-            <Button
-              className="rounded btn btn-secondary"
-              onClick={handleSubmit}
-            >
-              Click me! If you wanna view your saved superheroes 😃
-            </Button>
-          </div>
         </>
       )}
+      <div className="d-flex justify-content-center mt-3 ">
+        <Button className="rounded btn btn-secondary" onClick={handleSubmit}>
+          Click me! If you wanna view your saved superheroes 😃
+        </Button>
+      </div>
     </div>
   );
 };
