@@ -1,6 +1,7 @@
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import React from "react";
-import { Button } from "react-bootstrap";
+
+import { HeroListItem } from "../heroListItem/HeroListItem";
 export const HeroList = ({ setHeroInfo, handleClose }) => {
   const GET_SUPERHERO = gql`
     query Query {
@@ -19,15 +20,7 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
       }
     }
   `;
-  const DELETE_HERO = gql`
-    mutation Mutation($heroID: DeleteSuperheroInput) {
-      deletehero(heroID: $heroID) {
-        success
-        message
-      }
-    }
-  `;
-  const [deleteHero] = useMutation(DELETE_HERO);
+
   // to find the curHero has been clicked = whats saved in DB
   const handleSubmit = (event) => {
     const chosenHero = data.superhero.find(
@@ -35,15 +28,6 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     );
     setHeroInfo(chosenHero);
     handleClose();
-  };
-  // As the delete button gets clicked-> call my graphql mutation
-  const handleClick = async (event) => {
-    const deleteHeroID = event.target.getAttribute("data-hero-id");
-
-    await deleteHero({
-      variables: { heroID: { id: deleteHeroID } },
-    });
-   
   };
 
   // because it automatically caches the default -> what has been edited did not render/reflect right away
@@ -59,21 +43,9 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {
         return (
-          <React.Fragment key={index}>
-            <li
-              className="text-primary text-center d-flex justify-content-between p-3"
-              id={cur.id}
-              onClick={handleSubmit}
-            >
-              {cur.name}
-              <Button data-hero-id={cur.id} onClick={handleClick}>
-                {" "}
-                Delete
-              </Button>
-            </li>
-          </React.Fragment>
+          <HeroListItem handleSubmit={handleSubmit} hero={cur} key={index} />
         );
-      })}
+      })}{" "}
     </ul>
   );
 };
