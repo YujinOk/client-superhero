@@ -24,6 +24,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     return <div>Loading...⚪️</div>;
   }
   const toggleShowToast = () => setShowToast(!showToast);
+
   const handleSubmit = async () => {
     const { combat, durability, intelligence, power, speed, strength } =
       heroInfo.powerstats;
@@ -49,14 +50,14 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     toggleShowToast();
   };
 
+  // when editing input, i need to update that into my getter
   const handleChange = async (event) => {
     const copyPreState = JSON.parse(JSON.stringify(heroInfo));
+    // e.g. heroInfo.powerstats "combat" =76
     copyPreState.powerstats[event.target.id] = event.target.value;
 
     setHeroInfo(copyPreState);
   };
-
-  // needs another button to save ->call postHero function (heroInfo)
 
   return (
     <div className="mt-4 d-flex align-items-center flex-column">
