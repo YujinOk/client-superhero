@@ -67,7 +67,10 @@ export const HeroList = () => {
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {
         return (
-          <div className="d-flex justify-content-between" key={index}>
+          <div
+            className="d-flex justify-content-between align-items-center"
+            key={index}
+          >
             <li
               className="text-primary text-center d-flex justify-content-between p-3"
               id={cur.id}

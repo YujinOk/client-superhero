@@ -1,11 +1,10 @@
-// import { Header } from "./components/header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Main } from "./containers/Main.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NavBar } from "./components/navbar/Nav.jsx";
 import { SavedHero } from "./components/savedHero/SavedHero.jsx";
 import { HeroProvider } from "./context/heroContext.jsx";
 import { HeroDisplay } from "./components/heroDisplay/HeroDisplay.jsx";
+import { SearchBar } from "./components/searchBar/SearchBar.jsx";
 
 function App() {
   return (
@@ -14,7 +13,7 @@ function App() {
         <NavBar />
         <div className="d-flex flex-column align-items-center mt-5">
           <Routes>
-            <Route path="/" element={<Main />} />{" "}
+            <Route path="/" element={<SearchBar />} />{" "}
             <Route path="/saved" element={<SavedHero />} />
             <Route path="/display" element={<HeroDisplay />} />
           </Routes>

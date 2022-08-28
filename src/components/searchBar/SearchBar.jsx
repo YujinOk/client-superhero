@@ -19,6 +19,7 @@ export const SearchBar = () => {
   // when button gets clicked
   const handleSubmit = async () => {
     setHeroInfo(await fetchSuperHeros(searchText));
+    // replace the browser history to be /display -> force to connect the url to be /display
     navigate("/display", { replace: true });
   };
 
