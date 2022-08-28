@@ -34,7 +34,7 @@ export const HeroList = () => {
 
   const { setHeroInfo } = useContext(HeroContext);
   const [deleteHero] = useMutation(DELETE_HERO);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   // to find the curHero has been clicked = whats saved in DB
   const handleSubmit = (event) => {
     const chosenHero = data.superhero.find(
@@ -67,20 +67,23 @@ export const HeroList = () => {
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {
         return (
-          <React.Fragment key={index}>
+          <div className="d-flex justify-content-between" key={index}>
             <li
               className="text-primary text-center d-flex justify-content-between p-3"
               id={cur.id}
               onClick={handleSubmit}
             >
               {cur.name}
-
-              <Button data-hero-id={cur.id} onClick={handleClick}>
-                {" "}
-                Delete
-              </Button>
             </li>
-          </React.Fragment>
+            <Button
+              className="h-50"
+              data-hero-id={cur.id}
+              onClick={handleClick}
+            >
+              {" "}
+              Delete
+            </Button>
+          </div>
         );
       })}
     </ul>

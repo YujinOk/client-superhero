@@ -13,7 +13,6 @@ function App() {
       <HeroProvider>
         <NavBar />
         <div className="d-flex flex-column align-items-center mt-5">
-          {/* <Header /> */}
           <Routes>
             <Route path="/" element={<Main />} />{" "}
             <Route path="/saved" element={<SavedHero />} />
