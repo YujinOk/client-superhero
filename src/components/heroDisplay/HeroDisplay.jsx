@@ -2,14 +2,13 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { gql, useMutation } from "@apollo/client";
-import Toast from "react-bootstrap/Toast";
 
-import { useState } from "react";
+import { useContext } from "react";
+import { HeroContext } from "../../context/heroContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
-  // const [isToast, setIsToast] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-
+export const HeroDisplay = () => {
   const POST_HERO = gql`
     mutation Mutation($heroInfo: SuperheroInput) {
       postHero(heroInfo: $heroInfo) {
@@ -19,11 +18,13 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     }
   `;
   const [mutateHero] = useMutation(POST_HERO);
-
+  const { heroInfo, setHeroInfo } = useContext(HeroContext);
+  const notify = () =>
+    toast("Your superhero has been saved!", { position: "top-center" });
   if (!heroInfo) {
     return <div>Loading...⚪️</div>;
   }
-  const toggleShowToast = () => setShowToast(!showToast);
+  
 
   const handleSubmit = async () => {
     const { combat, durability, intelligence, power, speed, strength } =
@@ -47,7 +48,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
       variables: { heroInfo: updatedHeroInfo },
     });
 
-    toggleShowToast();
+    notify();
   };
 
   // when editing input, i need to update that into my getter
@@ -129,26 +130,8 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
               {" "}
               Save
             </Button>
+            <ToastContainer />
           </div>
-
-          <Toast
-            show={showToast}
-            onClose={toggleShowToast}
-            className="bg-secondary"
-            position="top-start"
-          >
-            <Toast.Header>
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto">Success!</strong>
-            </Toast.Header>
-            <Toast.Body>
-              Woohoo, You have succesfully saved your superhero! 🎉
-            </Toast.Body>
-          </Toast>
         </ul>
 
         <img

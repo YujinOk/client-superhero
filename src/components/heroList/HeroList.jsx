@@ -1,7 +1,11 @@
 import { useQuery, gql, useMutation } from "@apollo/client";
 import React from "react";
 import { Button } from "react-bootstrap";
-export const HeroList = ({ setHeroInfo, handleClose }) => {
+import { useContext } from "react";
+import { HeroContext } from "../../context/heroContext";
+import { useNavigate } from "react-router-dom";
+
+export const HeroList = () => {
   const GET_SUPERHERO = gql`
     query Query {
       superhero {
@@ -27,14 +31,17 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
       }
     }
   `;
+
+  const { setHeroInfo } = useContext(HeroContext);
   const [deleteHero] = useMutation(DELETE_HERO);
+  const navigate = useNavigate();
   // to find the curHero has been clicked = whats saved in DB
   const handleSubmit = (event) => {
     const chosenHero = data.superhero.find(
       (curHero) => curHero.id === event.target.id
     );
     setHeroInfo(chosenHero);
-    handleClose();
+    navigate("/display", { replace: true });
   };
   // As the delete button gets clicked-> call my graphql mutation
   const handleClick = async (event) => {
@@ -43,11 +50,12 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     await deleteHero({
       variables: { heroID: { id: deleteHeroID } },
     });
-   
+    // to reflect the deleted item
+    await refetch();
   };
 
   // because it automatically caches the default -> what has been edited did not render/reflect right away
-  const { data, loading } = useQuery(GET_SUPERHERO, {
+  const { data, loading, refetch } = useQuery(GET_SUPERHERO, {
     fetchPolicy: "network-only",
   });
 
@@ -59,19 +67,23 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     <ul className="list-unstyled">
       {data?.superhero?.map((cur, index) => {
         return (
-          <React.Fragment key={index}>
+          <div className="d-flex justify-content-between" key={index}>
             <li
               className="text-primary text-center d-flex justify-content-between p-3"
               id={cur.id}
               onClick={handleSubmit}
             >
               {cur.name}
-              <Button data-hero-id={cur.id} onClick={handleClick}>
-                {" "}
-                Delete
-              </Button>
             </li>
-          </React.Fragment>
+            <Button
+              className="h-50"
+              data-hero-id={cur.id}
+              onClick={handleClick}
+            >
+              {" "}
+              Delete
+            </Button>
+          </div>
         );
       })}
     </ul>
