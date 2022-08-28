@@ -1,7 +1,11 @@
 import { useQuery, gql, useMutation } from "@apollo/client";
 import React from "react";
 import { Button } from "react-bootstrap";
-export const HeroList = ({ setHeroInfo, handleClose }) => {
+import { useContext } from "react";
+import { HeroContext } from "../../context/heroContext";
+import { useNavigate } from "react-router-dom";
+
+export const HeroList = () => {
   const GET_SUPERHERO = gql`
     query Query {
       superhero {
@@ -27,14 +31,17 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
       }
     }
   `;
+
+  const { setHeroInfo } = useContext(HeroContext);
   const [deleteHero] = useMutation(DELETE_HERO);
+  const navigate=useNavigate();
   // to find the curHero has been clicked = whats saved in DB
   const handleSubmit = (event) => {
     const chosenHero = data.superhero.find(
       (curHero) => curHero.id === event.target.id
     );
     setHeroInfo(chosenHero);
-    handleClose();
+    navigate("/display", { replace: true });
   };
   // As the delete button gets clicked-> call my graphql mutation
   const handleClick = async (event) => {

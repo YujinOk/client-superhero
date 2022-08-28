@@ -3,10 +3,12 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { gql, useMutation } from "@apollo/client";
 import Toast from "react-bootstrap/Toast";
+import { useContext } from "react";
+import { HeroContext } from "../../context/heroContext";
 
 import { useState } from "react";
 
-export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
+export const HeroDisplay = () => {
   // const [isToast, setIsToast] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -19,7 +21,7 @@ export const HeroDisplay = ({ heroInfo, setHeroInfo }) => {
     }
   `;
   const [mutateHero] = useMutation(POST_HERO);
-
+  const { heroInfo, setHeroInfo } = useContext(HeroContext);
   if (!heroInfo) {
     return <div>Loading...⚪️</div>;
   }

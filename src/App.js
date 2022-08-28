@@ -4,19 +4,23 @@ import { Main } from "./containers/Main.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NavBar } from "./components/navbar/Nav.jsx";
 import { SavedHero } from "./components/savedHero/SavedHero.jsx";
+import { HeroProvider } from "./context/heroContext.jsx";
+import { HeroDisplay } from "./components/heroDisplay/HeroDisplay.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <NavBar />
-      <div className="d-flex flex-column align-items-center mt-5">
-        {/* <Header /> */}
-        <Routes>
-          <Route path="/" element={<Main />} />{" "}
-          
-          <Route path="/saved" element={<SavedHero />} />
-        </Routes>
-      </div>
+      <HeroProvider>
+        <NavBar />
+        <div className="d-flex flex-column align-items-center mt-5">
+          {/* <Header /> */}
+          <Routes>
+            <Route path="/" element={<Main />} />{" "}
+            <Route path="/saved" element={<SavedHero />} />
+            <Route path="/display" element={<HeroDisplay />} />
+          </Routes>
+        </div>
+      </HeroProvider>
     </BrowserRouter>
   );
 }
