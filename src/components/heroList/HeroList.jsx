@@ -43,11 +43,12 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
     await deleteHero({
       variables: { heroID: { id: deleteHeroID } },
     });
-   
+    // to reflect the deleted item
+    await refetch();
   };
 
   // because it automatically caches the default -> what has been edited did not render/reflect right away
-  const { data, loading } = useQuery(GET_SUPERHERO, {
+  const { data, loading, refetch } = useQuery(GET_SUPERHERO, {
     fetchPolicy: "network-only",
   });
 
@@ -66,6 +67,7 @@ export const HeroList = ({ setHeroInfo, handleClose }) => {
               onClick={handleSubmit}
             >
               {cur.name}
+
               <Button data-hero-id={cur.id} onClick={handleClick}>
                 {" "}
                 Delete
